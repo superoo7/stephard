@@ -10,48 +10,38 @@ interface userData {
 }
 
 const registration = async (discordName: string, discordId: string, steemName: string) => {
-  let user = new User({
-    name: discordName,
-    discordid: discordId,
-    steemname: steemName,
-    lastpostdatetime: [0],
-    user: 'user'
-  })
-  const data = await User.findOneAndUpdate(
-    { discordid: discordId },
-    user,
-    { upsert: true },
-    (err, user) => {
-      if (err) {
-        console.log('err')
-        console.log(err)
-        throw err
-      }
-      return user
-    }
-  )
-
-  return data
+  let user = await findUser(discordId)
+  if (user === null) {
+    let newUser = new User({
+      name: discordName,
+      discordid: discordId,
+      steemname: steemName,
+      lastpostdatetime: [0],
+      user: 'user'
+    })
+    let ret = await newUser.save()
+    return ret
+  } else {
+    // @ts-ignore
+    user.steemname = steemName
+    return await user.save()
+  }
 }
 
 const findUser = async (discordId: string) => {
-  return await User.findOne({ discordid: discordId }, (err, user) => {
-    if (err) {
-      throw err
-    }
-    return user
-  })
+  return await User.findOne({ discordid: discordId }, (err: any, user: any) => user)
 }
 
 const changeUserRole = async (discordId: string, roles: string) => {
-  return await User.findOne({ discordid: discordId }, async (err, user: any) => {
-    if (err) throw err
+  return await User.findOne({ discordid: discordId }, async (error, user: any) => {
+    if (error) throw 'User not found'
     user.roles = roles.toLowerCase()
-    if (roles.toLowerCase() === 'user') {
-      user.lastpostdatetime = [user.lastpostdatetime[0]]
-    } else if (roles.toLowerCase() === 'sponsor') {
-      user.lastpostdatetime = [0, user.lastpostdatetime[0]]
-    }
+    // console.log(user)
+    // if (roles.toLowerCase() === 'user') {
+    //   user.lastpostdatetime = [user.lastpostdatetime[0]]
+    // } else if (roles.toLowerCase() === 'sponsor') {
+    //   user.lastpostdatetime = [0, user.lastpostdatetime[0]]
+    // }
     return await user.save()
   })
 }

@@ -21,26 +21,38 @@ describe('user', async () => {
 
     done()
   })
-  // describe('another test', () => {
   it('added new user to database', async done => {
     let test = testData()
-    await insertData(test)
-      .then((data: any) => {
-        expect(data.discordid).toBe(test.discordid)
-        done()
-      })
-      .catch(err => {
-        throw err
-      })
+    let data = await registration(test.name, test.discordid, test.steemname)
+    // @ts-ignore
+    expect(data.discordid).toBe(test.discordid)
+    done()
+  })
+
+  it('update the existing user from database based on the id', async done => {
+    let test = testData()
+    await insertData(test).catch(() => {
+      console.log('2 1')
+    })
+    test.steemname = 'testeroo'
+    await insertData(test).catch(() => {
+      console.log('2 2')
+    })
+    const findData = await findUser(test.discordid).catch(() => {
+      console.log('2 3')
+    })
+    // @ts-ignore
+    expect(findData.steemname).toBe(test.steemname)
+    done()
   })
 
   it('finds the existing user from database based on the id', async done => {
     let test = testData()
     await insertData(test).catch(() => {
-      console.log('2 1')
+      console.log('3 1')
     })
     const findData = await findUser(test.discordid).catch(() => {
-      console.log('2 2')
+      console.log('3 2')
     })
     // @ts-ignore
     expect(findData.discordid).toBe(test.discordid)
@@ -50,19 +62,18 @@ describe('user', async () => {
   it('changes role of a user', async done => {
     let test = testData()
     await insertData(test).catch(() => {
-      console.log('3 1')
+      console.log('4 1')
     })
     await changeUserRole(test.discordid, 'ban').catch(() => {
-      console.log('3 2')
+      console.log('4 2')
     })
     const findData = await findUser(test.discordid).catch(() => {
-      console.log('3 3')
+      console.log('4 3')
     })
     // @ts-ignore
     expect(findData.roles).toBe('ban')
     done()
   })
-  // })
 })
 
 // ================================================================================
@@ -97,7 +108,5 @@ let randomName = (n: number): string => {
 // ================================================================================
 // 1. Insert Data
 let insertData = async (data: UserData) => {
-  return await registration(data.name, data.discordid, data.steemname).catch(err => {
-    throw err
-  })
+  return await registration(data.name, data.discordid, data.steemname)
 }
