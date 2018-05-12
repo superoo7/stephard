@@ -21,7 +21,7 @@ const last = async (msg: Discord.Message, id: string) => {
     return
   }
 
-  const timeDiff = Date.now() - data.lastpostdatetime[0]
+  const timeDiff = (Date.now() - data.lastpostdatetime[0]) / 1000
   const displayTime = convertSeconds(timeDiff)
   const cooldownTime =
     COOLDOWN_TIME - timeDiff > 0
