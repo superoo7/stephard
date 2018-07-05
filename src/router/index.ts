@@ -15,6 +15,7 @@ const router = (msg: Discord.Message) => {
     case POST_PROMO_CHANNEL:
       break
     default:
+      moderator(msg)
       break
   }
 }

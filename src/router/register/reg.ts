@@ -1,14 +1,33 @@
 import * as Discord from 'discord.js'
 
-import { steem } from '../../index'
+import { steem } from '../../initialize'
 import { templateMessage, Color } from '../template'
 import { registration } from '../../controller/user'
+import { accountErrMsg } from '../template/errorMsg'
+import { SteemAccountError } from '../../module'
 
 const reg = async (msg: Discord.Message, args: string[]) => {
+  console.log('register')
   if (args.length === 2 && args[1].match(/^[a-z][a-z0-9\-\.]+$/)) {
-    let data = await steem.api.getAccountsAsync([args[1]])
+    const getAccount: any = (d: string[]) =>
+      new Promise((resolve, reject) => {
+        steem.api.getAccounts(d, (err: { name: string; message: string }, res: any[]) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    let data = await getAccount([args[1]]).catch((err: SteemAccountError) => {
+      accountErrMsg(msg, err)
+      return
+    })
     if (data.length !== 0) {
-      const data: any = await registration(msg.author.username, msg.author.id, args[1])
+      const data: any = await registration(msg.author.username, msg.author.id, args[1]).catch(
+        () => {
+          console.error('err')
+        }
+      )
       templateMessage(
         msg,
         `<@!${msg.author.id}> Successfully registered @${data.steemname}`,

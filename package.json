@@ -1,4 +1,9 @@
 {
+  "script": {
+    "dev": "",
+    "build": "",
+    "test": ""
+  },
   "dependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/mongoose": "^5.0.13",

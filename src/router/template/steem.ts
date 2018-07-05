@@ -1,4 +1,4 @@
-import * as Discord from 'discord.js'
+import { SteemUpvoteError } from '../../module'
 
 const upvote = async (
   username: string,
@@ -16,7 +16,7 @@ const upvote = async (
       author,
       permlink,
       weightage,
-      (err: any, result: any) => {
+      (err: SteemUpvoteError, result: any) => {
         console.log(err, result)
         if (err) {
           reject(err)
@@ -52,7 +52,7 @@ const comment = async (
         tags: ['teammalaysiadevtest', 'teammalaysia'],
         app: 'stephard/0.1'
       },
-      (err: any, result: any) => {
+      (err: SteemUpvoteError, result: any) => {
         console.log(err, result)
         if (err) {
           reject(err)

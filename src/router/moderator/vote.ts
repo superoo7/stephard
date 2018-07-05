@@ -3,10 +3,16 @@ import { templateMessage, Color } from '../template'
 import { TRIGGER } from '../../config'
 import { upvote, comment } from '../template/steem'
 import { steem } from '../../initialize'
+import { SteemUpvoteError } from '../../module'
+import { upvoteErrMsg } from '../template/errorMsg'
 
 const vote = async (msg: Discord.Message, args: string[]) => {
   if (args.length !== 3) {
-    templateMessage(msg, `Wrong format, try \`${TRIGGER}roles @DISCORDNAME user\``, Color.red)
+    templateMessage(
+      msg,
+      `Wrong format, try \`${TRIGGER}upvote <Steem URL> <Weightage>\``,
+      Color.red
+    )
     return
   } else {
     let author = args[1].split(/[\/#]/)[4].substr(1)
@@ -34,7 +40,10 @@ const vote = async (msg: Discord.Message, args: string[]) => {
       .then(() => {
         templateMessage(msg, `Success`, Color.green)
       })
-      .catch(() => {
+      .catch((err: SteemUpvoteError) => {
+        console.log(`======`)
+        console.log(JSON.stringify(err))
+        if (err) upvoteErrMsg(msg, err)
         templateMessage(msg, 'Failed, try again later', Color.red)
       })
   }

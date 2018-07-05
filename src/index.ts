@@ -3,8 +3,6 @@ import * as Discord from 'discord.js'
 import * as logger from 'winston'
 import * as dotenv from 'dotenv'
 
-import * as steem from 'steem'
-
 // Local Import
 import db from './db'
 import router from './router'
