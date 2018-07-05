@@ -26,7 +26,10 @@ client.on('ready', () => {
 
 // on message receive
 client.on('message', msg => {
-  if (msg.author.id !== client.user.id) router(msg)
+  //Always return with an bot.....
+  if (msg.author.bot) return
+  // main router
+  router(msg)
 })
 
 // Discord Login
