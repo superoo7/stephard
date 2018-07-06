@@ -6,7 +6,7 @@ import { findUser, updateUserTime } from '../../controller/user'
 import { convertSeconds } from '../template/time'
 import { findPost, upvote, comment } from '../template/steem'
 import { SteemPostInfo, UserData, SteemUpvoteError } from '../../module'
-import { steem } from 'initialize'
+import { steem } from '../../initialize'
 import { upvoteErrMsg } from '../template/errorMsg'
 
 const promo = async (msg: Discord.Message) => {
@@ -15,7 +15,9 @@ const promo = async (msg: Discord.Message) => {
     return false
   })
   if (isMaintenance) {
-    deleteMessage(msg, `Server under maintenance.`)
+    const replyMsg = `Stephard is under maintenance.`
+    await templateMessage(msg, replyMsg, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
 
@@ -31,29 +33,34 @@ const promo = async (msg: Discord.Message) => {
   // REJECT: If not yet registered
   // ============================================================
   if (!data) {
-    templateMessage(
+    await templateMessage(
       msg,
-      `No record of last post, it could be that you have not register. Try \`${TRIGGER}reg YOUR_STEEM_NAME\` at  #register-before-post-promo`,
+      `[<@${
+        msg.author.id
+      }>] No record of last post, it could be that you have not register. Try \`${TRIGGER}reg YOUR_STEEM_NAME\` at  #register-before-post-promo.`,
       Color.red
     )
-    deleteMessage(msg, `Please go to #register-before-post-promo to register yourself`)
+    await deleteMessage(msg, `Please go to #register-before-post-promo to register yourself.`)
     return
   }
   // ============================================================
   // REJECT: If user role is ban
   // ============================================================
   if (data.roles === 'ban') {
-    templateMessage(msg, `You are ban, please refer to moderators`, Color.red)
-    deleteMessage(msg, `You are ban, please refer to moderators of TeamMalaysia`)
+    const replyMsg = `[<@${msg.author.id}>] You are ban, please refer to moderators`
+    await templateMessage(msg, replyMsg, Color.red)
+    await deleteMessage(msg, `${replyMsg} of TeamMalaysia`)
     return
   }
   // ============================================================
   // LOGGER: Welcome msg for first time posting
   // ============================================================
-  if (data.lastpostdatetime[0] === 0) {
+  if (data.lastpostdatetime.length === 1 && data.lastpostdatetime[0] === 0) {
     templateMessage(
       msg,
-      `Seems like it is the first time you posting here, Please read the guideline on #announcement and Welcome!`,
+      `[<@${
+        msg.author.id
+      }>] Seems like it is the first time you posting here, Please read the guideline on #announcement and Welcome!`,
       Color.green
     )
   }
@@ -63,7 +70,9 @@ const promo = async (msg: Discord.Message) => {
   // ============================================================
   let isPostValid: boolean = !!post.match(/(http|https):\/\/(www\.steemit\.com\/|steemit\.com\/)/g)
   if (!isPostValid) {
-    deleteMessage(msg, `Please attach steemit.com link only`)
+    const replyMsg = `Please attach steemit.com link only`
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
   // ============================================================
@@ -71,10 +80,9 @@ const promo = async (msg: Discord.Message) => {
   // ============================================================
   const messageWordsCount: number = post.match(/[\u00ff-\uffff]|\S+/g).length
   if (messageWordsCount < 10) {
-    deleteMessage(
-      msg,
-      `Please write a short description before posting the link/URL. (10-50 words).   请在发布链接或URL之前写一个简短的描述。`
-    )
+    const replyMsg = `Please write a short description before posting the link/URL. (10-50 words).   请在发布链接或URL之前写一个简短的描述。`
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
   // ============================================================
@@ -82,10 +90,11 @@ const promo = async (msg: Discord.Message) => {
   // ============================================================
   const timeDiff = (Date.now() - data.lastpostdatetime[0]) / 1000
   if (COOLDOWN_TIME - timeDiff > 0) {
-    deleteMessage(
-      msg,
-      `Please wait ${convertSeconds(COOLDOWN_TIME - timeDiff).display} before sharing the post`
-    )
+    const replyMsg = `Please wait ${
+      convertSeconds(COOLDOWN_TIME - timeDiff).display
+    } before sharing the post`
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
 
@@ -97,11 +106,15 @@ const promo = async (msg: Discord.Message) => {
     // parse out author and permlink and check wether is correct
     if (!(authorName.charAt(0) === '@' && !!permlinkName)) {
       // Find post on steemit
-      deleteMessage(msg, `Invalid Link`)
+      const replyMsg = 'Invalid Link'
+      await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+      await deleteMessage(msg, replyMsg)
       return
     }
   } else {
-    deleteMessage(msg, `Invalid Link`)
+    const replyMsg = 'Invalid Link'
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
 
@@ -111,10 +124,14 @@ const promo = async (msg: Discord.Message) => {
       pendingMessage(msg, 'Post voted by cheetah', link[0])
       return { err: err.err }
     } else if (err.err === 'VOTED') {
-      deleteMessage(msg, 'Post already been voted')
+      const replyMsg = 'Post already been voted'
+      templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+      deleteMessage(msg, replyMsg)
       return { err: err.err }
     } else {
-      deleteMessage(msg, JSON.stringify(err))
+      const replyMsg = JSON.stringify(err)
+      templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+      deleteMessage(msg, replyMsg)
       return { err: err }
     }
   })
@@ -131,18 +148,17 @@ const promo = async (msg: Discord.Message) => {
   // GET weightage
   // ============================================================
   if (d.bodyLength < POST_CONFIG.minimumLength) {
-    deleteMessage(
-      msg,
-      `Post is too short (Your post length: ${d.bodyLength}words). Minimum length: ${
-        POST_CONFIG.minimumLength
-      }words`
-    )
+    const replyMsg = `Post is too short (Your post length: ${d.bodyLength}words). Minimum length: ${
+      POST_CONFIG.minimumLength
+    }words`
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   } else if (d.bodyLength > POST_CONFIG.optimumLength) {
     weightage = 50
   } else {
     // 10% ~ 50% VP
-    weightage = (d.bodyLength / POST_CONFIG.optimumLength) * 40 + 10
+    weightage = Math.floor((d.bodyLength / POST_CONFIG.optimumLength) * 40 + 10)
   }
   // ============================================================
   // REJECT: unwantedTags
@@ -152,10 +168,11 @@ const promo = async (msg: Discord.Message) => {
       return POST_CONFIG.unwantedTags.includes(tag)
     }).length !== 0
   if (isUnwantedTagExist) {
-    deleteMessage(
-      msg,
-      `This bot does not support following tags: ${POST_CONFIG.unwantedTags.join(',')}`
-    )
+    const replyMsg = `This bot does not support following tags: ${POST_CONFIG.unwantedTags.join(
+      ','
+    )}`
+    await templateMessage(msg, replyMsg, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
   // ============================================================
@@ -167,12 +184,11 @@ const promo = async (msg: Discord.Message) => {
     }).length === POST_CONFIG.requiredTags.length
   )
   if (isRequiredTagNotExist) {
-    deleteMessage(
-      msg,
-      `To use this bot, you required to use the following tags: ${POST_CONFIG.requiredTags.join(
-        ','
-      )}`
-    )
+    const replyMsg = `To use this bot, you required to use the following tags: ${POST_CONFIG.requiredTags.join(
+      ','
+    )}`
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
   // ============================================================
@@ -187,7 +203,9 @@ const promo = async (msg: Discord.Message) => {
     }).length === 0
   )
   if (isPendingTagsExist) {
-    pendingMessage(msg, 'Use of pending tags', link[0], weightage)
+    const replyMsg = 'Use of pending tags'
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
   // ============================================================
@@ -201,10 +219,14 @@ const promo = async (msg: Discord.Message) => {
   ).getTime()
   const postAge = Date.now() - unixDate
   if (postAge > POST_CONFIG.maximumPostAge) {
-    deleteMessage(msg, 'Post too old to be shared (more than 3.5 days)')
+    const replyMsg = 'Post too old to be shared (more than 3.5 days)'
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   } else if (postAge < POST_CONFIG.minimumPostAge) {
-    deleteMessage(msg, 'Post too new to be shared (less than 30 minutes)')
+    const replyMsg = 'Post too new to be shared (less than 30 minutes)'
+    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
+    await deleteMessage(msg, replyMsg)
     return
   }
   if (data.roles === 'senior') {
@@ -231,6 +253,7 @@ const promo = async (msg: Discord.Message) => {
         )
           .then(async () => {
             await updateUserTime(msg.author.id, msg.createdTimestamp)
+            await templateMessage(msg, `you may have a :cookie: coming to you soon!`, Color.green)
           })
           .catch((err: SteemUpvoteError) => {
             msg.delete()
@@ -240,7 +263,11 @@ const promo = async (msg: Discord.Message) => {
       })
       .catch(err => {
         upvoteErrMsg(msg, err)
-        msg.reply('Unable to comment (maybe too many people posting on post promo)')
+        templateMessage(
+          msg,
+          `[<@${msg.author.id}>] Unable to comment (maybe too many people posting on post promo)`,
+          Color.red
+        )
       })
   } else if (data.roles === 'user') {
     // ============================================================

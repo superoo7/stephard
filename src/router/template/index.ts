@@ -1,11 +1,12 @@
 import * as Discord from 'discord.js'
 import { client } from '../../index'
-import { PENDING_APPROVAL_CHANNEL } from 'config'
-import { updateUserTime } from 'controller/user'
+import { PENDING_APPROVAL_CHANNEL } from '../../config'
+import { updateUserTime } from '../../controller/user'
 
 enum Color {
   green = 0x00f900,
-  red = 0xff0000
+  red = 0xff0000,
+  yellow = 0xffff00
 }
 
 const templateMessage = async (msg: Discord.Message, content: string, color: Color) => {
@@ -29,10 +30,10 @@ const deleteMessage = async (msg: Discord.Message, reason: string) => {
   await msg.author.send({
     embed: {
       color: Color.red,
-      description: `Reason: ${reason}`
+      description: `Reason: **${reason}**`
     }
   })
-  await msg.author.sendMessage(msg.content)
+  await msg.author.send(`\`\`\`${msg.content}\`\`\``)
   return
 }
 
@@ -46,7 +47,7 @@ const pendingMessage = async (
   await templateMessage(
     msg,
     `Your post has been forwarded to #pending-for-approval, please wait for moderator to review`,
-    Color.red
+    Color.yellow
   )
   await updateUserTime(msg.author.id, msg.createdTimestamp).catch(() =>
     templateMessage(msg, `Database error`, Color.red)
@@ -62,7 +63,7 @@ const pendingMessage = async (
     },
     {
       name: 'Suggested Weightage',
-      value: weightage
+      value: `${weightage}`
     },
     {
       name: 'Content',
@@ -73,7 +74,7 @@ const pendingMessage = async (
   // @ts-ignore
   await client.channels.get(PENDING_APPROVAL_CHANNEL).send({
     embed: {
-      color: Color.green,
+      color: Color.yellow,
       description: `Reason: **${reason}**`,
       fields
     }

@@ -1,7 +1,7 @@
 const removeMd = require('remove-markdown')
 import { SteemUpvoteError, SteemPostInfo } from '../../module'
-import { steem } from 'initialize'
-import { MESSAGE_LIST } from 'config'
+import { steem } from '../../initialize'
+import { MESSAGE_LIST } from '../../config'
 
 const upvote = async (
   username: string,
@@ -104,7 +104,7 @@ const findPost: (author: string, permlink: string) => Promise<SteemPostInfo> = (
 
       const isVoted: boolean =
         result.active_votes.filter((data: any) => {
-          if (data.voter === 'superoo7-dev') {
+          if (data.voter === process.env.STEEM_USERNAME) {
             return true
           }
           return false

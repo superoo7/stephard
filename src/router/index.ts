@@ -17,7 +17,6 @@ const router = (msg: Discord.Message) => {
       promo(msg)
       break
     default:
-      promo(msg)
       break
   }
 }
