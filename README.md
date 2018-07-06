@@ -14,6 +14,25 @@ A bot that prevent abuse on post-promo channel of steem community.
 
 # Feature
 ## User
+
+Role:
+
+* ban
+
+Can't access the channel
+
+* probation
+
+Approved post will be redirected to pending. Required moderator to approve.
+
+* user
+
+Approved post will be redirected to pending. Required moderator to approve.
+
+* senior
+
+Post directly being approved
+
 ### Registration Channel
 
 - Register their steemname and link to their discord account
