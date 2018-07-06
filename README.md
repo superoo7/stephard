@@ -37,8 +37,8 @@ A bot that prevent abuse on post-promo channel of steem community.
 There is a special moderator channel for administration purpose
 
 - Put the bot into maintenance mode
-- Ban some of the users
-- Manually upvote a certain post in pending
+- Ban or Change roles of some of the users
+- Manually upvote a certain post in pending channel
 - Check status of a certain person
 
 # Technology

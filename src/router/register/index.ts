@@ -30,6 +30,19 @@ const register = async (msg: Discord.Message) => {
         reg(msg, args)
         break
       case 'help':
+        msg.reply({
+          embed: {
+            color: Color.green,
+            description: `Help on Register channel`,
+            fields: [
+              {
+                name: `${TRIGGER}reg <STEEMNAME>`,
+                value: 'Register steemit username with discord'
+              },
+              { name: `${TRIGGER}last`, value: 'check last post date time' }
+            ]
+          }
+        })
         break
       default:
         templateMessage(msg, `Invalid Command, please try \`${TRIGGER}help\` `, Color.red)
