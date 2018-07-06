@@ -7,8 +7,8 @@ const roles = async (msg: Discord.Message, args: string[]) => {
   if (args.length !== 3) {
     templateMessage(msg, `Wrong format, try \`${TRIGGER}roles @DISCORDNAME user\``, Color.red)
     return
-  } else if (!['user', 'ban', 'special', 'sponsor'].includes(args[2].toLowerCase())) {
-    templateMessage(msg, `Invalid role (user/ban/special/sponsor)`, Color.red)
+  } else if (!['user', 'ban', 'probation', 'senior'].includes(args[2].toLowerCase())) {
+    templateMessage(msg, `Invalid role (user/ban/probation/senior)`, Color.red)
     return
   }
   let discordId, role

@@ -26,6 +26,32 @@ const moderator = (msg: Discord.Message) => {
       case 'vote':
         vote(msg, args)
         break
+      case 'help':
+        msg.reply({
+          embed: {
+            color: Color.green,
+            description: `Help on Register channel`,
+            fields: [
+              {
+                name: `${TRIGGER}maintenance <on/off>`,
+                value: 'Turn maintenance mode on/off'
+              },
+              {
+                name: `${TRIGGER}info <discordtag>`,
+                value: 'check lastpostdatetime and role of a person'
+              },
+              {
+                name: `${TRIGGER}upvote <steemit link> <weightage>`,
+                value: 'Approve a post by upvote with weightage'
+              },
+              {
+                name: `${TRIGGER}roles <discordtag> <roles>`,
+                value: 'Change role of a person. (user/ban/probation/senior)'
+              }
+            ]
+          }
+        })
+        break
       default:
         templateMessage(msg, `Type \`${TRIGGER}help\` to get started`, Color.red)
         break
