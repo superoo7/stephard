@@ -49,6 +49,6 @@ export interface UserData {
   name: string
   discordid: string
   steemname: string
-  roles: 'user' | 'senior' | 'ban'
+  roles: 'user' | 'senior' | 'ban' | 'probation'
   lastpostdatetime: number[]
 }

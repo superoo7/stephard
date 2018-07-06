@@ -8,9 +8,9 @@ let userSchema = new Schema({
   steemname: { type: String, required: true },
   roles: {
     type: String,
-    default: 'user',
+    default: 'probation',
     required: true,
-    enum: ['user', 'senior', 'ban']
+    enum: ['probation', 'user', 'senior', 'ban']
   },
   lastpostdatetime: {
     type: [Number],

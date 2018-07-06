@@ -273,7 +273,10 @@ const promo = async (msg: Discord.Message) => {
     // ============================================================
     // PENDING: user role
     // ============================================================
-    pendingMessage(msg, `Learner license`, link[0], weightage)
+    pendingMessage(msg, `Learner User 🎒`, link[0], weightage)
+    return
+  } else if (data.roles === 'probation') {
+    pendingMessage(msg, `Probation User 🚼`, link[0], weightage)
     return
   } else {
     deleteMessage(msg, 'role not found')
