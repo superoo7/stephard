@@ -26,3 +26,29 @@ export interface SteemUpvoteError {
     stack: any
   }
 }
+
+export interface SteemPostInfo {
+  author: string
+  permlink: string
+  created: string
+  bodyLength: number
+  tags: string[]
+}
+
+export interface PostPromoRule {
+  maximumPostAge: number
+  minimumPostAge: number
+  minimumLength: number
+  optimumLength: number
+  unwantedTags: string[]
+  requiredTags: string[]
+  pendingTags: string[]
+}
+
+export interface UserData {
+  name: string
+  discordid: string
+  steemname: string
+  roles: 'user' | 'senior' | 'ban'
+  lastpostdatetime: number[]
+}

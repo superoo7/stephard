@@ -3,6 +3,7 @@ import { logger, client } from '../index'
 import { REGISTER_CHANNEL, MODERATOR_CHANNEL, POST_PROMO_CHANNEL } from '../config'
 import register from './register'
 import moderator from './moderator'
+import promo from './promo'
 
 const router = (msg: Discord.Message) => {
   switch (msg.channel.id) {
@@ -13,9 +14,10 @@ const router = (msg: Discord.Message) => {
       moderator(msg)
       break
     case POST_PROMO_CHANNEL:
+      promo(msg)
       break
     default:
-      moderator(msg)
+      promo(msg)
       break
   }
 }

@@ -46,4 +46,22 @@ const changeUserRole = async (discordId: string, roles: string) => {
   })
 }
 
-export { registration, findUser, changeUserRole }
+const updateUserTime = async (discordId: string, time: number) => {
+  return await User.findOne({ discordid: discordId }, async (err, user: any) => {
+    if (err) {
+      throw err
+    }
+    user.lastpostdatetime = [time]
+    let result = await user.save((err: any) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      console.log('success')
+      return
+    })
+    return result
+  })
+}
+
+export { registration, findUser, changeUserRole, updateUserTime }

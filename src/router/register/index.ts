@@ -6,6 +6,7 @@ import { templateMessage, Color } from '../template'
 import * as fs from 'fs'
 import reg from './reg'
 import last from './last'
+import { checkMaintenance } from '../template/maintenance'
 
 const register = async (msg: Discord.Message) => {
   // Main
@@ -35,16 +36,6 @@ const register = async (msg: Discord.Message) => {
         break
     }
   }
-}
-
-const checkMaintenance = async (msg: Discord.Message) => {
-  // Check Maintenance
-  let maintenance: string = await fs.readFileSync(MODERATOR_LOC, 'utf-8')
-  if (JSON.parse(maintenance).maintenance) {
-    templateMessage(msg, `Bot under maintenance`, Color.red)
-    return true
-  }
-  return false
 }
 
 export default register

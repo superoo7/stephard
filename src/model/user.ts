@@ -10,7 +10,7 @@ let userSchema = new Schema({
     type: String,
     default: 'user',
     required: true,
-    enum: ['user', 'ban', 'special', 'sponsor']
+    enum: ['user', 'senior', 'ban']
   },
   lastpostdatetime: {
     type: [Number],

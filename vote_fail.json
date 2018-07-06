@@ -1,0 +1,240 @@
+{
+    "cause": {
+        "name": "RPCError",
+        "code": -32000,
+        "data": {
+            "code": 13,
+            "name": "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12out_of_rangeEEEE",
+            "message": "unknown key",
+            "stack": [{
+                "context": {
+                    "level": "warn",
+                    "file": "database.cpp",
+                    "line": 502,
+                    "method": "get_comment",
+                    "hostname": "",
+                    "timestamp": "2018-07-05T06:36:07"
+                },
+                "format": "${what}: ",
+                "data": {
+                    "author": "superoo7",
+                    "permlink": "elm-functional-programming-with-javascrip",
+                    "what": "unknown key"
+                }
+            }, {
+                "context": {
+                    "level": "warn",
+                    "file": "steem_evaluator.cpp",
+                    "line": 1519,
+                    "method": "do_apply",
+                    "hostname": "",
+                    "timestamp": "2018-07-05T06:36:07"
+                },
+                "format": "",
+                "data": {
+                    "o": {
+                        "voter": "johnsonlai",
+                        "author": "superoo7",
+                        "permlink": "elm-functional-programming-with-javascrip",
+                        "weight": 1200
+                    }
+                }
+            }, {
+                "context": {
+                    "level": "warn",
+                    "file": "database.cpp",
+                    "line": 3214,
+                    "method": "_apply_transaction",
+                    "hostname": "",
+                    "timestamp": "2018-07-05T06:36:07"
+                },
+                "format": "",
+                "data": {
+                    "op": {
+                        "type": "vote_operation",
+                        "value": {
+                            "voter": "johnsonlai",
+                            "author": "superoo7",
+                            "permlink": "elm-functional-programming-with-javascrip",
+                            "weight": 1200
+                        }
+                    }
+                }
+            }, {
+                "context": {
+                    "level": "warn",
+                    "file": "database.cpp",
+                    "line": 3220,
+                    "method": "_apply_transaction",
+                    "hostname": "",
+                    "timestamp": "2018-07-05T06:36:07"
+                },
+                "format": "",
+                "data": {
+                    "trx": {
+                        "ref_block_num": 47145,
+                        "ref_block_prefix": 3791230643,
+                        "expiration": "2018-07-05T06:46:03",
+                        "operations": [{
+                            "type": "vote_operation",
+                            "value": {
+                                "voter": "johnsonlai",
+                                "author": "superoo7",
+                                "permlink": "elm-functional-programming-with-javascrip",
+                                "weight": 1200
+                            }
+                        }],
+                        "extensions": [],
+                        "signatures": ["205d15519ae4dc54709a1541e64bfc3c55e37e98fe56ec683935e60e6677222b0509d298a6615cc8714b58baf30d7669ca3dba53837cd902d48f7bf2bdf54465da"]
+                    }
+                }
+            }, {
+                "context": {
+                    "level": "warn",
+                    "file": "database.cpp",
+                    "line": 788,
+                    "method": "push_transaction",
+                    "hostname": "",
+                    "timestamp": "2018-07-05T06:36:07"
+                },
+                "format": "",
+                "data": {
+                    "trx": {
+                        "ref_block_num": 47145,
+                        "ref_block_prefix": 3791230643,
+                        "expiration": "2018-07-05T06:46:03",
+                        "operations": [{
+                            "type": "vote_operation",
+                            "value": {
+                                "voter": "johnsonlai",
+                                "author": "superoo7",
+                                "permlink": "elm-functional-programming-with-javascrip",
+                                "weight": 1200
+                            }
+                        }],
+                        "extensions": [],
+                        "signatures": ["205d15519ae4dc54709a1541e64bfc3c55e37e98fe56ec683935e60e6677222b0509d298a6615cc8714b58baf30d7669ca3dba53837cd902d48f7bf2bdf54465da"]
+                    }
+                }
+            }]
+        }
+    },
+    "isOperational": true,
+    "code": -32000,
+    "data": {
+        "code": 13,
+        "name": "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12out_of_rangeEEEE",
+        "message": "unknown key",
+        "stack": [{
+            "context": {
+                "level": "warn",
+                "file": "database.cpp",
+                "line": 502,
+                "method": "get_comment",
+                "hostname": "",
+                "timestamp": "2018-07-05T06:36:07"
+            },
+            "format": "${what}: ",
+            "data": {
+                "author": "superoo7",
+                "permlink": "elm-functional-programming-with-javascrip",
+                "what": "unknown key"
+            }
+        }, {
+            "context": {
+                "level": "warn",
+                "file": "steem_evaluator.cpp",
+                "line": 1519,
+                "method": "do_apply",
+                "hostname": "",
+                "timestamp": "2018-07-05T06:36:07"
+            },
+            "format": "",
+            "data": {
+                "o": {
+                    "voter": "johnsonlai",
+                    "author": "superoo7",
+                    "permlink": "elm-functional-programming-with-javascrip",
+                    "weight": 1200
+                }
+            }
+        }, {
+            "context": {
+                "level": "warn",
+                "file": "database.cpp",
+                "line": 3214,
+                "method": "_apply_transaction",
+                "hostname": "",
+                "timestamp": "2018-07-05T06:36:07"
+            },
+            "format": "",
+            "data": {
+                "op": {
+                    "type": "vote_operation",
+                    "value": {
+                        "voter": "johnsonlai",
+                        "author": "superoo7",
+                        "permlink": "elm-functional-programming-with-javascrip",
+                        "weight": 1200
+                    }
+                }
+            }
+        }, {
+            "context": {
+                "level": "warn",
+                "file": "database.cpp",
+                "line": 3220,
+                "method": "_apply_transaction",
+                "hostname": "",
+                "timestamp": "2018-07-05T06:36:07"
+            },
+            "format": "",
+            "data": {
+                "trx": {
+                    "ref_block_num": 47145,
+                    "ref_block_prefix": 3791230643,
+                    "expiration": "2018-07-05T06:46:03",
+                    "operations": [{
+                        "type": "vote_operation",
+                        "value": {
+                            "voter": "johnsonlai",
+                            "author": "superoo7",
+                            "permlink": "elm-functional-programming-with-javascrip",
+                            "weight": 1200
+                        }
+                    }],
+                    "extensions": [],
+                    "signatures": ["205d15519ae4dc54709a1541e64bfc3c55e37e98fe56ec683935e60e6677222b0509d298a6615cc8714b58baf30d7669ca3dba53837cd902d48f7bf2bdf54465da"]
+                }
+            }
+        }, {
+            "context": {
+                "level": "warn",
+                "file": "database.cpp",
+                "line": 788,
+                "method": "push_transaction",
+                "hostname": "",
+                "timestamp": "2018-07-05T06:36:07"
+            },
+            "format": "",
+            "data": {
+                "trx": {
+                    "ref_block_num": 47145,
+                    "ref_block_prefix": 3791230643,
+                    "expiration": "2018-07-05T06:46:03",
+                    "operations": [{
+                        "type": "vote_operation",
+                        "value": {
+                            "voter": "johnsonlai",
+                            "author": "superoo7",
+                            "permlink": "elm-functional-programming-with-javascrip",
+                            "weight": 1200
+                        }
+                    }],
+                    "extensions": [],
+                    "signatures": ["205d15519ae4dc54709a1541e64bfc3c55e37e98fe56ec683935e60e6677222b0509d298a6615cc8714b58baf30d7669ca3dba53837cd902d48f7bf2bdf54465da"]
+                }
+            }
+        }]
+    }
+}
