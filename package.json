@@ -1,5 +1,5 @@
 {
-  "script": {
+  "scripts": {
     "dev": "",
     "build": "",
     "test": ""
@@ -25,7 +25,6 @@
   "name": "stephard",
   "version": "1.0.0",
   "main": "src/index.ts",
-  "scripts": {},
   "keywords": [],
   "author": "superoo7",
   "license": "ISC",
