@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv'
 // Local Import
 import db from './db'
 import router from './router'
+import './server'
 
 // Initialize
 // dotenv

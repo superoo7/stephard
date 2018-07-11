@@ -67,4 +67,9 @@ const updateUserTime = async (discordId: string, time: number) => {
   })
 }
 
-export { registration, findUser, changeUserRole, updateUserTime }
+// TODO: Add test
+const getAllUsers = () => {
+  return User.find({})
+}
+
+export { registration, findUser, changeUserRole, updateUserTime, getAllUsers }
