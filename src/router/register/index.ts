@@ -7,6 +7,7 @@ import * as fs from 'fs'
 import reg from './reg'
 import last from './last'
 import { checkMaintenance } from '../template/maintenance'
+const stephardPackage = require('../../../package.json')
 
 const register = async (msg: Discord.Message) => {
   // Main
@@ -39,7 +40,11 @@ const register = async (msg: Discord.Message) => {
                 name: `${TRIGGER}reg <STEEMNAME>`,
                 value: 'Register steemit username with discord'
               },
-              { name: `${TRIGGER}last`, value: 'check last post date time' }
+              { name: `${TRIGGER}last`, value: 'check last post date time' },
+              {
+                name: 'Stephard bot version:',
+                value: `Version: ${stephardPackage.version}`
+              }
             ]
           }
         })

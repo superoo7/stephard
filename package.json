@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev": "",
-    "build": "",
-    "test": ""
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "build": "tsc",
+    "test": "jest"
   },
   "dependencies": {
     "discord.js": "^11.3.2",
@@ -20,13 +20,14 @@
     "@types/mongoose": "^5.0.13",
     "@types/remove-markdown": "^0.1.1",
     "@types/winston": "^2.3.9",
+    "concurrently": "^3.6.0",
     "jest": "^22.4.3"
   },
   "name": "stephard",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "main": "src/index.ts",
-  "keywords": [],
+  "keywords": ["discord", "typescript", "steem"],
   "author": "superoo7",
-  "license": "ISC",
-  "description": "A discord bot"
+  "license": "MIT",
+  "description": "A discord bot that make use of Steem blockchain for post promotion purpose, featuring moderator features."
 }

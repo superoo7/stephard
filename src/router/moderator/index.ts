@@ -5,6 +5,7 @@ import info from './info'
 import roles from './roles'
 import vote from './vote'
 import { templateMessage, Color } from '../template'
+const stephardPackage = require('../../../package.json')
 
 const moderator = (msg: Discord.Message) => {
   // Main
@@ -47,6 +48,10 @@ const moderator = (msg: Discord.Message) => {
               {
                 name: `${TRIGGER}roles <discordtag> <roles>`,
                 value: 'Change role of a person. (user/ban/probation/senior)'
+              },
+              {
+                name: 'Stephard bot version:',
+                value: `Version: ${stephardPackage.version}`
               }
             ]
           }
