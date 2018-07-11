@@ -236,15 +236,9 @@ const promo = async (msg: Discord.Message) => {
 
     // Senior will get bonus percentage
     if (data.roles === 'senior') weightage += BONUS_WEIGHTAGE
-
-    await comment(
-      process.env.STEEM_USERNAME,
-      process.env.STEEM_POSTING,
-      authorName.substring(1),
-      permlinkName,
-      '',
-      steem
-    )
+    const username: string = process.env.TEAMMALAYSIA || process.env.STEEM_USERNAME
+    const posting: string = process.env.TEAMMALAYSIA_POSTING || process.env.STEEM_POSTING
+    await comment(username, posting, authorName.substring(1), permlinkName, '', steem)
       .then(() => {
         return upvote(
           process.env.STEEM_USERNAME,
