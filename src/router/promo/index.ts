@@ -1,7 +1,7 @@
 import * as Discord from 'discord.js'
 import { checkMaintenance } from '../template/maintenance'
 import { templateMessage, Color, deleteMessage, pendingMessage } from '../template'
-import { TRIGGER, COOLDOWN_TIME, POST_CONFIG } from '../../config'
+import { TRIGGER, COOLDOWN_TIME, POST_CONFIG, BONUS_WEIGHTAGE } from '../../config'
 import { findUser, updateUserTime } from '../../controller/user'
 import { convertSeconds } from '../template/time'
 import { findPost, upvote, comment } from '../template/steem'
@@ -229,10 +229,13 @@ const promo = async (msg: Discord.Message) => {
     await deleteMessage(msg, replyMsg)
     return
   }
-  if (data.roles === 'senior') {
+  if (data.roles === 'senior' || data.roles === 'user') {
     // ============================================================
     // POST APPROVED
     // ============================================================
+
+    // Senior will get bonus percentage
+    if (data.roles === 'senior') weightage += BONUS_WEIGHTAGE
 
     await comment(
       process.env.STEEM_USERNAME,
@@ -269,12 +272,6 @@ const promo = async (msg: Discord.Message) => {
           Color.red
         )
       })
-  } else if (data.roles === 'user') {
-    // ============================================================
-    // PENDING: user role
-    // ============================================================
-    pendingMessage(msg, `Learner User 🎒`, link[0], weightage)
-    return
   } else if (data.roles === 'probation') {
     pendingMessage(msg, `Probation User 🚼`, link[0], weightage)
     return
