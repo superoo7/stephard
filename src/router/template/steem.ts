@@ -42,7 +42,7 @@ const comment = async (
   let message: string
   let messageTemplate = randomMessage()
   if (moderator !== '') {
-    message = `Your post has been manually curated by ${moderator}<br>${messageTemplate}`
+    message = `Your post has been manually curated by ${moderator}\n${messageTemplate}`
   } else {
     message = messageTemplate
   }
