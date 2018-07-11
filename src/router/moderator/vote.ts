@@ -41,18 +41,7 @@ const vote = async (msg: Discord.Message, args: string[]) => {
       .then(() => {
         templateMessage(msg, `Success`, Color.green)
         // @ts-ignore
-        client.channels.get(POST_PROMO_CHANNEL).send({
-          embed: {
-            color: Color.green,
-            description: `Post approved!`,
-            fields: [
-              {
-                name: 'url',
-                value: `${args[1]}`
-              }
-            ]
-          }
-        })
+        client.channels.get(POST_PROMO_CHANNEL).send(`**Post Approved!**\n${args[1]}`)
       })
       .catch((err: SteemUpvoteError) => {
         console.log(`======`)
