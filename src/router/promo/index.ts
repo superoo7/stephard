@@ -234,6 +234,13 @@ const promo = async (msg: Discord.Message) => {
     // POST APPROVED
     // ============================================================
 
+    // BONUS: for thos who commented and upvoted
+
+    if (post.toLowerCase().includes('upvote') && post.toLowerCase().includes('comment')) {
+      pendingMessage(msg, '<@330221961684713474>', link[0], weightage)
+      return
+    }
+
     // Senior will get bonus percentage
     if (data.roles === 'senior') weightage += BONUS_WEIGHTAGE
     const username: string = process.env.TEAMMALAYSIA || process.env.STEEM_USERNAME
