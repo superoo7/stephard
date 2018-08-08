@@ -7,22 +7,24 @@ interface userData {
   discordid: string
   steemname: string
   lastpostdatetime: number[]
+  save: any
 }
 
 const registration = async (discordName: string, discordId: string, steemName: string) => {
-  let user = await findUser(discordId)
+  let ud = await findUser(discordId)
+  // @ts-ignore
+  let user: userData = <userData>ud
   if (user === null) {
     let newUser = new User({
       name: discordName,
       discordid: discordId,
       steemname: steemName,
       lastpostdatetime: [0],
-      user: 'user'
+      user: 'probation'
     })
     let ret = await newUser.save()
     return ret
   } else {
-    // @ts-ignore
     user.steemname = steemName
     return await user.save()
   }
@@ -46,4 +48,28 @@ const changeUserRole = async (discordId: string, roles: string) => {
   })
 }
 
-export { registration, findUser, changeUserRole }
+// TODO: Add test
+const updateUserTime = async (discordId: string, time: number) => {
+  return await User.findOne({ discordid: discordId }, async (err, user: any) => {
+    if (err) {
+      throw err
+    }
+    user.lastpostdatetime = [time]
+    let result = await user.save((err: any) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      console.log('success')
+      return
+    })
+    return result
+  })
+}
+
+// TODO: Add test
+const getAllUsers = () => {
+  return User.find({})
+}
+
+export { registration, findUser, changeUserRole, updateUserTime, getAllUsers }

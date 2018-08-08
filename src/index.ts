@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv'
 // Local Import
 import db from './db'
 import router from './router'
+import './server'
 
 // Initialize
 // dotenv
@@ -26,7 +27,10 @@ client.on('ready', () => {
 
 // on message receive
 client.on('message', msg => {
-  if (msg.author.id !== client.user.id) router(msg)
+  //Always return with an bot.....
+  if (msg.author.bot) return
+  // main router
+  router(msg)
 })
 
 // Discord Login

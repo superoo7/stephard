@@ -7,7 +7,6 @@ import { accountErrMsg } from '../template/errorMsg'
 import { SteemAccountError } from '../../module'
 
 const reg = async (msg: Discord.Message, args: string[]) => {
-  console.log('register')
   if (args.length === 2 && args[1].match(/^[a-z][a-z0-9\-\.]+$/)) {
     const getAccount: any = (d: string[]) =>
       new Promise((resolve, reject) => {

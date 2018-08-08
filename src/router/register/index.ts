@@ -6,6 +6,8 @@ import { templateMessage, Color } from '../template'
 import * as fs from 'fs'
 import reg from './reg'
 import last from './last'
+import { checkMaintenance } from '../template/maintenance'
+const stephardPackage = require('../../../package.json')
 
 const register = async (msg: Discord.Message) => {
   // Main
@@ -29,22 +31,29 @@ const register = async (msg: Discord.Message) => {
         reg(msg, args)
         break
       case 'help':
+        msg.reply({
+          embed: {
+            color: Color.green,
+            description: `Help on Register channel`,
+            fields: [
+              {
+                name: `${TRIGGER}reg <STEEMNAME>`,
+                value: 'Register steemit username with discord'
+              },
+              { name: `${TRIGGER}last`, value: 'check last post date time' },
+              {
+                name: 'Stephard bot version:',
+                value: `Version: ${stephardPackage.version}`
+              }
+            ]
+          }
+        })
         break
       default:
         templateMessage(msg, `Invalid Command, please try \`${TRIGGER}help\` `, Color.red)
         break
     }
   }
-}
-
-const checkMaintenance = async (msg: Discord.Message) => {
-  // Check Maintenance
-  let maintenance: string = await fs.readFileSync(MODERATOR_LOC, 'utf-8')
-  if (JSON.parse(maintenance).maintenance) {
-    templateMessage(msg, `Bot under maintenance`, Color.red)
-    return true
-  }
-  return false
 }
 
 export default register

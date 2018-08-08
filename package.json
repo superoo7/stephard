@@ -1,31 +1,40 @@
 {
-  "script": {
-    "dev": "",
-    "build": "",
-    "test": ""
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "build": "tsc",
+    "test": "jest"
   },
   "dependencies": {
-    "@types/dotenv": "^4.0.3",
-    "@types/mongoose": "^5.0.13",
-    "@types/winston": "^2.3.9",
+    "cors": "^2.8.4",
     "discord.js": "^11.3.2",
     "dotenv": "^5.0.1",
+    "express": "^4.16.3",
     "jest-mongoose": "^1.0.2",
     "mongoose": "^5.1.0",
+    "remove-markdown": "^0.3.0",
     "steem": "^0.7.1",
     "steemjs": "^1.0.4",
     "winston": "^2.4.2"
   },
   "devDependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0",
     "@types/jest": "^22.2.3",
+    "@types/mongoose": "^5.0.13",
+    "@types/remove-markdown": "^0.1.1",
+    "@types/winston": "^2.3.9",
+    "concurrently": "^3.6.0",
     "jest": "^22.4.3"
   },
   "name": "stephard",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "main": "src/index.ts",
-  "scripts": {},
-  "keywords": [],
+  "keywords": [
+    "discord",
+    "typescript",
+    "steem"
+  ],
   "author": "superoo7",
-  "license": "ISC",
-  "description": "A discord bot"
+  "license": "MIT",
+  "description": "A discord bot that make use of Steem blockchain for post promotion purpose, featuring moderator features."
 }

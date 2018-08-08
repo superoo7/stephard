@@ -1,10 +1,11 @@
 import * as Discord from 'discord.js'
 import { templateMessage, Color } from '../template'
-import { TRIGGER } from '../../config'
+import { TRIGGER, POST_PROMO_CHANNEL } from '../../config'
 import { upvote, comment } from '../template/steem'
 import { steem } from '../../initialize'
 import { SteemUpvoteError } from '../../module'
 import { upvoteErrMsg } from '../template/errorMsg'
+import { client } from '../../index'
 
 const vote = async (msg: Discord.Message, args: string[]) => {
   if (args.length !== 3) {
@@ -39,6 +40,8 @@ const vote = async (msg: Discord.Message, args: string[]) => {
     ])
       .then(() => {
         templateMessage(msg, `Success`, Color.green)
+        // @ts-ignore
+        client.channels.get(POST_PROMO_CHANNEL).send(`**Post Approved!**\n${args[1]}`)
       })
       .catch((err: SteemUpvoteError) => {
         console.log(`======`)

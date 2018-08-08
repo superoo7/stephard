@@ -3,9 +3,11 @@ import { findUser } from '../../controller/user'
 import { convertSeconds } from '../template/time'
 import { templateMessage, Color } from '../template'
 import { TRIGGER, COOLDOWN_TIME } from '../../config'
+import { UserData } from '../../module'
 
 const last = async (msg: Discord.Message, id: string) => {
-  const data: any = await findUser(id)
+  // @ts-ignore
+  const data: UserData = await findUser(id)
   if (!data) {
     templateMessage(
       msg,
