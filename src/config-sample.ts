@@ -18,8 +18,8 @@ const COOLDOWN_TIME: number = 20 * 60 * 60 // 20 hours
 
 // Post Promo
 const POST_CONFIG: PostPromoRule = {
-  maximumPostAge: 302400000, // 3.5 days
-  minimumPostAge: 1800000, // 30 minutes
+  maximumPostAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+  minimumPostAge: 15 * 60 * 1000, // 15 minutes
   minimumLength: 120, // 120 words
   optimumLength: 4000, // 4000 words
   unwantedTags: ['nsfw'],
