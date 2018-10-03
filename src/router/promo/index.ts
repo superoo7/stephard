@@ -157,8 +157,8 @@ const promo = async (msg: Discord.Message) => {
   } else if (d.bodyLength > POST_CONFIG.optimumLength) {
     weightage = 50
   } else {
-    // 10% ~ 50% VP
-    weightage = Math.floor((d.bodyLength / POST_CONFIG.optimumLength) * 40 + 10)
+    // 50% ~ 60% VP (Senior: 60% ~ 70% VP)
+    weightage = Math.floor((d.bodyLength / POST_CONFIG.optimumLength) * 10 + 50)
   }
   // ============================================================
   // REJECT: unwantedTags
