@@ -5,9 +5,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/bytebuffer": "^5.0.37",
     "cors": "^2.8.4",
     "discord.js": "^11.3.2",
     "dotenv": "^5.0.1",
+    "dsteem": "^0.10.1",
     "express": "^4.16.3",
     "jest-mongoose": "^1.0.2",
     "mongoose": "^5.1.0",

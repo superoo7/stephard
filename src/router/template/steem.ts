@@ -1,4 +1,5 @@
 const removeMd = require('remove-markdown')
+import { Client } from 'dsteem'
 import { SteemUpvoteError, SteemPostInfo } from '../../module'
 import { steem } from '../../initialize'
 import { MESSAGE_LIST } from '../../config'
@@ -137,4 +138,25 @@ const randomMessage: () => string = () => {
   return MESSAGE_LIST[val]
 }
 
-export { upvote, comment, findPost }
+const getVP: (name: string) => Promise<string> = async (name: string) => {
+  const api = new Client('https://api.steemit.com')
+  const profile = await api.database.getAccounts([name])
+  const user = profile[0] ? profile[0] : null
+  if (user) {
+    return parseFloat(calcVP(user.last_vote_time, user.voting_power)).toFixed(2)
+  } else {
+    throw new Error('Account not fount')
+  }
+}
+
+export const calcVP: (last_vote_time: string, voting_power: number) => string = (
+  last_vote_time: string,
+  voting_power: number
+) => {
+  const secondsago = (new Date().getTime() - new Date(last_vote_time + 'Z').getTime()) / 1000
+  const vpow = voting_power + (10000 * secondsago) / 432000
+  const vmin = Math.min(vpow / 100, 100).toFixed(2)
+  return vmin
+}
+
+export { upvote, comment, findPost, getVP }
