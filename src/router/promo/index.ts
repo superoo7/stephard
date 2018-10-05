@@ -4,7 +4,7 @@ import { templateMessage, Color, deleteMessage, pendingMessage } from '../templa
 import { TRIGGER, COOLDOWN_TIME, POST_CONFIG, BONUS_WEIGHTAGE } from '../../config'
 import { findUser, updateUserTime } from '../../controller/user'
 import { convertSeconds } from '../template/time'
-import { findPost, upvote, comment } from '../template/steem'
+import { findPost, upvote, comment, getVP } from '../template/steem'
 import { SteemPostInfo, UserData, SteemUpvoteError } from '../../module'
 import { steem } from '../../initialize'
 import { upvoteErrMsg } from '../template/errorMsg'
@@ -52,6 +52,18 @@ const promo = async (msg: Discord.Message) => {
     await deleteMessage(msg, `${replyMsg} of TeamMalaysia`)
     return
   }
+
+  // ============================================================
+  // REJECT: Curie VP less than 80%
+  // ============================================================
+  const curieSP = await getVP('curie')
+  if (parseFloat(curieSP) < 80) {
+    const replyMsg = `Curie SP is less than 80%, please try again later`
+    await templateMessage(msg, replyMsg, Color.red)
+    await deleteMessage(msg, `${replyMsg}`)
+    return
+  }
+
   // ============================================================
   // LOGGER: Welcome msg for first time posting
   // ============================================================
