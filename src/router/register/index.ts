@@ -7,6 +7,7 @@ import * as fs from 'fs'
 import reg from './reg'
 import last from './last'
 import { checkMaintenance } from '../template/maintenance'
+import { getVP } from '../template/steem'
 const stephardPackage = require('../../../package.json')
 
 const register = async (msg: Discord.Message) => {
@@ -30,6 +31,10 @@ const register = async (msg: Discord.Message) => {
       case 'update':
         reg(msg, args)
         break
+      case 'curie':
+        const curieVP = await getVP('curie')
+        templateMessage(msg, `Curie VP: ${curieVP}%`, Color.green)
+        break
       case 'help':
         msg.reply({
           embed: {
@@ -41,6 +46,7 @@ const register = async (msg: Discord.Message) => {
                 value: 'Register steemit username with discord'
               },
               { name: `${TRIGGER}last`, value: 'check last post date time' },
+              { name: `${TRIGGER}curie`, value: 'check curie VP' },
               {
                 name: 'Stephard bot version:',
                 value: `Version: ${stephardPackage.version}`
