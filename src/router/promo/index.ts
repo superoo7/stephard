@@ -58,7 +58,7 @@ const promo = async (msg: Discord.Message) => {
   // ============================================================
   const curieSP = await getVP('curie')
   if (parseFloat(curieSP) < 80) {
-    const replyMsg = `Curie SP is less than 80%, please try again later`
+    const replyMsg = `Curie SP is ${parseFloat(curieSP)}% (<80%), please try again some time later.`
     await templateMessage(msg, replyMsg, Color.red)
     await deleteMessage(msg, `${replyMsg}`)
     return
