@@ -5,6 +5,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/bytebuffer": "^5.0.37",
     "cors": "^2.8.4",
     "discord.js": "^11.3.2",
     "dotenv": "^5.0.1",
