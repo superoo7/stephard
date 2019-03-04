@@ -1,6 +1,8 @@
 // jest.config.js
 module.exports = {
-    verbose: true,
-    browser: false,
-    roots: ['./dist']
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/dist/'],
+  verbose: true,
+  browser: false
 }

@@ -1,4 +1,4 @@
-import { convertSeconds, displayTime } from './time'
+import { convertSeconds, displayTime } from '../time'
 
 describe('time', () => {
   it('show correct time', () => {
