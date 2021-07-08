@@ -1,4 +1,5 @@
 import * as Discord from 'discord.js'
+import { extractPostLink } from 'steem-link-extractor'
 import { checkMaintenance } from '../template/maintenance'
 import { templateMessage, Color, deleteMessage, pendingMessage } from '../template'
 import { TRIGGER, COOLDOWN_TIME, POST_CONFIG, BONUS_WEIGHTAGE } from '../../config'
@@ -23,7 +24,7 @@ const promo = async (msg: Discord.Message) => {
 
   // Initialize variable
   const post = msg.content
-  let authorName: string, permlinkName: string, weightage: number
+  let weightage: number
 
   // Get data from database
   const tempData = await findUser(msg.author.id)
@@ -78,16 +79,6 @@ const promo = async (msg: Discord.Message) => {
   }
 
   // ============================================================
-  // REJECT: Contains Steemit link?
-  // ============================================================
-  let isPostValid: boolean = !!post.match(/(http|https):\/\/(www\.steemit\.com\/|steemit\.com\/)/g)
-  if (!isPostValid) {
-    const replyMsg = `Please attach steemit.com link only`
-    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
-    await deleteMessage(msg, replyMsg)
-    return
-  }
-  // ============================================================
   // REJECT: Minimum Words being shared on discord < 10
   // ============================================================
   const messageWordsCount: number = post.match(/[\u00ff-\uffff]|\S+/g).length
@@ -111,24 +102,8 @@ const promo = async (msg: Discord.Message) => {
   }
 
   // extract permlink
+  const { author: authorName, permlink: permlinkName } = extractPostLink(post, { automatic: true })
   let link = post.match(/(https?:\/\/[^\s]+)/g)
-  if (link.length === 1) {
-    authorName = link[0].split(/[\/#]/)[4]
-    permlinkName = link[0].split(/[\/#]/)[5]
-    // parse out author and permlink and check wether is correct
-    if (!(authorName.charAt(0) === '@' && !!permlinkName)) {
-      // Find post on steemit
-      const replyMsg = 'Invalid Link'
-      await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
-      await deleteMessage(msg, replyMsg)
-      return
-    }
-  } else {
-    const replyMsg = 'Invalid Link'
-    await templateMessage(msg, `[<@${msg.author.id}>]: ${replyMsg}`, Color.red)
-    await deleteMessage(msg, replyMsg)
-    return
-  }
 
   const postData = await findPost(authorName.substring(1), permlinkName).catch((err: any) => {
     if (err.err === 'CHEETAH') {

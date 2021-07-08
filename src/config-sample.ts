@@ -15,6 +15,7 @@ const PENDING_APPROVAL_CHANNEL: string = ''
 // Trigger
 const TRIGGER: string = '*'
 const COOLDOWN_TIME: number = 20 * 60 * 60 // 20 hours
+const BONUS_WEIGHTAGE = 10
 
 // Post Promo
 const POST_CONFIG: PostPromoRule = {
@@ -45,5 +46,6 @@ export {
   MODERATOR_LOC,
   COOLDOWN_TIME,
   POST_CONFIG,
-  MESSAGE_LIST
+  MESSAGE_LIST,
+  BONUS_WEIGHTAGE
 }

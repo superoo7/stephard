@@ -1,6 +1,6 @@
-import { registration, findUser, changeUserRole } from './user'
-import db from '../db'
-import User from '../model/user'
+import { registration, findUser, changeUserRole } from '../user'
+import db from '../../db'
+import User from '../../model/user'
 import * as mongoose from 'mongoose'
 
 interface UserData {
